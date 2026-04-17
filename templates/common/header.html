@@ -1,0 +1,96 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IYCF - 국제청소년문화재단</title>
+    <link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* ================= 헤더 및 네비게이션 ================= */
+        .top-bar { font-size: 0.9rem; }
+        .custom-nav { display: flex; background-color: #2b6a9c; border-radius: 5px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); padding: 0; list-style: none; margin: 0; }
+        .custom-nav > li { border-right: 1px solid #5a8ebf; position: relative; }
+        .custom-nav > li:last-child { border-right: none; }
+        .custom-nav > li > a { display: flex; align-items: center; justify-content: center; height: 100%; color: white; text-decoration: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 500; white-space: nowrap; }
+        .custom-nav > li > a:hover { background-color: #1f537d; }
+        .nav-main-item > a { background-color: #8cb396; border-radius: 5px 0 0 5px; }
+        .nav-main-item > a:hover { background-color: #7a9e83; }
+
+        /* 드롭다운 메뉴 스타일 */
+        .custom-dropdown { display: none; position: absolute; top: 100%; left: 0; background-color: #4da6ff; min-width: 100%; box-shadow: 2px 4px 6px rgba(0,0,0,0.2); border-radius: 0 0 5px 5px; z-index: 1000; padding: 0; list-style: none; margin: 0; }
+        .custom-nav > li:hover .custom-dropdown { display: block; }
+        .custom-dropdown > li { border-bottom: 1px solid #80bfff; }
+        .custom-dropdown > li:last-child { border-bottom: none; }
+        /* white-space: nowrap; 을 추가하여 글자가 줄바꿈되지 않고 한 줄로 나오게 설정 */
+        .custom-dropdown > li > a { display: block; color: white; text-decoration: none; padding: 10px 15px; font-size: 0.9rem; text-align: center; white-space: nowrap; }
+        .custom-dropdown > li > a:hover { background-color: #2b6a9c; }
+
+        .section-title-wrapper { display: flex; align-items: center; margin: 4rem 0 3rem; }
+        .section-title-line { flex-grow: 1; height: 1px; background-color: #dcdcdc; }
+        .section-title-text { margin: 0 20px; color: #555; font-size: 1.1rem; letter-spacing: 0.5px; }
+
+        /* ================= 완벽한 절반 겹침(Row) 정삼각형 갤러리 ================= */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            /* 3열 4줄(절반 겹침)의 완벽한 수학적 정삼각형 비율 */
+            aspect-ratio: 1000 / 962;
+            margin: 0 auto 4rem;
+        }
+
+        .tri {
+            position: absolute;
+            width: 33.333%; /* 3열이므로 너비는 1/3 */
+            height: 40%;    /* 총 높이의 40% (절반씩 겹치면 4줄이 딱 100%가 됨) */
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .tri:hover { z-index: 10; }
+
+        .tri-inner {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        /* < 모양 (왼쪽 뾰족, 오른쪽 평평) */
+        .point-left .tri-inner {
+            clip-path: polygon(100% 0%, 0% 50%, 100% 100%);
+            transform-origin: 66.66% 50%; /* 무게중심 기준 축소로 균일한 여백 생성 */
+            transform: scale(0.97);
+        }
+
+        /* > 모양 (왼쪽 평평, 오른쪽 뾰족) */
+        .point-right .tri-inner {
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+            transform-origin: 33.33% 50%;
+            transform: scale(0.97);
+        }
+
+        .tri:hover .tri-inner { transform: scale(1.02); }
+        .tri img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .tri:hover img { transform: scale(1.1); }
+
+        /* 가로(X축) 위치 (3열) */
+        .col1 { left: 0; }
+        .col2 { left: 33.333%; }
+        .col3 { left: 66.666%; }
+
+        /* 세로(Y축) 위치 (각 줄마다 정확히 절반인 20%씩 겹치며 내려감) */
+        .row1 { top: 0; }
+        .row2 { top: 20%; }
+        .row3 { top: 40%; }
+        .row4 { top: 60%; }
+
+        /* ================= 푸터 및 기타 ================= */
+        .location-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: #66c2a5; color: white; border-radius: 50%; font-size: 1.2rem; margin-bottom: 1rem; }
+        .custom-footer { background-color: #eef2ef; padding: 3rem 0; margin-top: 5rem; color: #333; border-top: 1px solid #dcdcdc; }
+        .footer-menu { list-style: none; padding: 0; font-size: 0.85rem; color: #555; }
+        .footer-menu li { margin-bottom: 0.3rem; }
+        .email-signup-input { border: 1px solid #ccc; background: transparent; padding: 8px 12px; width: 100%; max-width: 250px; font-size: 0.85rem; }
+    </style>
+</head>

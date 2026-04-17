@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include '/common/header.html' %}
+<body>
+    <div class="container mt-2">
+        <!-- 상단 로그인 및 헤더 -->
+        <div class="d-flex justify-content-end mb-3 top-bar">
+            <a href="#" class="text-dark text-decoration-none d-flex align-items-center"><i class="bi bi-person-circle fs-5 me-1"></i> 로그인</a>
+        </div>
+        {% include '/common/topmenu.html' %}
+        <div class="section-title-wrapper">
+            <div class="section-title-line"></div>
+            <div class="section-title-text">the International Youth Cultural Foundation</div>
+            <div class="section-title-line"></div>
+        </div>
+
+        <!-- ================= 갤러리 영역 (고객님 지침 완벽 적용) ================= -->
+        <div class="gallery-container">
+            <!-- 1줄 (Row 1): < > < -->
+            <div class="tri point-left col1 row1" onclick="openModal('/static/images/main1.png')"><div class="tri-inner"><img src="/static/images/main1.png" alt="Gallery 1"></div></div>
+            <div class="tri point-right col2 row1" onclick="openModal('/static/images/main2.png')"><div class="tri-inner"><img src="/static/images/main2.png" alt="Gallery 2"></div></div>
+            <div class="tri point-left col3 row1" onclick="openModal('/static/images/main3.png')"><div class="tri-inner"><img src="/static/images/main3.png" alt="Gallery 3"></div></div>
+
+            <!-- 2줄 (Row 2): > < > (절반 겹침) -->
+            <div class="tri point-right col1 row2" onclick="openModal('/static/images/main4.png')"><div class="tri-inner"><img src="/static/images/main4.png" alt="Gallery 4"></div></div>
+            <div class="tri point-left col2 row2" onclick="openModal('/static/images/main5.png')"><div class="tri-inner"><img src="/static/images/main5.png" alt="Gallery 5"></div></div>
+            <div class="tri point-right col3 row2" onclick="openModal('/static/images/main6.png')"><div class="tri-inner"><img src="/static/images/main6.png" alt="Gallery 6"></div></div>
+
+            <!-- 3줄 (Row 3): < > < (절반 겹침) -->
+            <div class="tri point-left col1 row3" onclick="openModal('/static/images/main7.png')"><div class="tri-inner"><img src="/static/images/main7.png" alt="Gallery 7"></div></div>
+            <div class="tri point-right col2 row3" onclick="openModal('/static/images/main8.png')"><div class="tri-inner"><img src="/static/images/main8.png" alt="Gallery 8"></div></div>
+            <div class="tri point-left col3 row3" onclick="openModal('/static/images/main9.png')"><div class="tri-inner"><img src="/static/images/main9.png" alt="Gallery 9"></div></div>
+
+            <!-- 4줄 (Row 4): > < > (절반 겹침) -->
+            <div class="tri point-right col1 row4" onclick="openModal('/static/images/main1.png')"><div class="tri-inner"><img src="/static/images/main1.png" alt="Gallery 10"></div></div>
+            <div class="tri point-left col2 row4" onclick="openModal('/static/images/main2.png')"><div class="tri-inner"><img src="/static/images/main2.png" alt="Gallery 11"></div></div>
+            <div class="tri point-right col3 row4" onclick="openModal('/static/images/main3.png')"><div class="tri-inner"><img src="/static/images/main3.png" alt="Gallery 12"></div></div>
+        </div>
+
+        <!-- LOCATION 영역 -->
+        <div class="section-title-wrapper mt-5"><div class="section-title-line"></div><div class="section-title-text">LOCATION</div><div class="section-title-line"></div></div>
+        <div class="text-center mb-4"><div class="location-icon"><i class="bi bi-geo-alt-fill"></i></div></div>
+        <div class="map-container text-center mb-5">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3263.882415174094!2d129.0988012152433!3d35.13456798032549!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3568ed6c0c2e0b5d%3A0x8f28f80c6c7b9c6a!2z67aA7IKw6rSR7Jet7IucIOuCqOq1rCDsiJjsmIHroZwgMzEy!5e0!3m2!1sko!2skr!4v1698200000000!5m2!1sko!2skr" width="100%" height="400" style="border:0; max-width: 900px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    {% include '/common/footer.html' %}
+
+    <!-- 모달 -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end"><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pt-0"><img id="modalImage" src="" alt="확대 이미지" class="img-fluid rounded shadow-lg" style="max-height: 80vh;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>function openModal(src) { document.getElementById('modalImage').src = src; new bootstrap.Modal(document.getElementById('imageModal')).show(); }</script>
+</body>
+</html>
