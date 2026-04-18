@@ -24,3 +24,73 @@ async def read_root(request: Request):
             "title": "IYCF - 국제청소년문화재단",
         },
     )
+
+@app.get("/introduction", response_class=HTMLResponse)
+async def introduction(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/mainpages/introduction.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/history", response_class=HTMLResponse)
+async def history(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/mainpages/history.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/artofasso", response_class=HTMLResponse)
+async def artofasso(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/mainpages/artofasso.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/shingo", response_class=HTMLResponse)
+async def shingo(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/mainpages/shingo.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/edu_chy", response_class=HTMLResponse)
+async def chy(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/edu/chy.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/edu_globl", response_class=HTMLResponse)
+async def globl(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/edu/globl.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
+@app.get("/edu_main", response_class=HTMLResponse)
+async def edumain(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="/edu/edu_main.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )

@@ -93,4 +93,93 @@
         .footer-menu li { margin-bottom: 0.3rem; }
         .email-signup-input { border: 1px solid #ccc; background: transparent; padding: 8px 12px; width: 100%; max-width: 250px; font-size: 0.85rem; }
     </style>
+    <style>
+        /* 헤더 디자인 */
+        .articles-header {
+            background-color: #d1b8af; /* 이미지와 유사한 베이지/인디핑크 톤 */
+            color: white;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .articles-header .welcome-text {
+            font-family: 'Brush Script MT', 'cursive', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .articles-header .welcome-line {
+            width: 50px;
+            height: 2px;
+            background-color: white;
+            margin: 0 auto 20px auto;
+        }
+
+        .articles-header h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+
+        /* 배경 장식 (도형) */
+        .bg-shape {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .shape-1 { width: 40px; height: 40px; transform: rotate(15deg); top: 20%; left: 15%; }
+        .shape-2 { width: 0; height: 0; border-left: 25px solid transparent; border-right: 25px solid transparent; border-bottom: 40px solid transparent; border-bottom-color: rgba(255,255,255,0.4); border-top: none; top: 70%; left: 20%; transform: rotate(-20deg); background: none; border-style: none solid solid solid; }
+        .shape-3 { width: 30px; height: 30px; transform: rotate(45deg); top: 60%; left: 45%; }
+        .shape-4 { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid rgba(255,255,255,0.4); top: 30%; right: 35%; transform: rotate(10deg); }
+        .shape-5 { width: 35px; height: 35px; border-radius: 50%; top: 40%; right: 15%; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); border: 1px solid rgba(255,255,255,0.4); }
+
+        /* 본문 디자인 */
+        .articles-content {
+            background-color: #ffffff;
+            padding: 50px 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* 목차 */
+        .toc-section {
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+        }
+        .toc-section p {
+            margin-bottom: 8px;
+        }
+
+        /* 조항 스타일 */
+        .chapter-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .article-title {
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .article-text {
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .article-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .article-list li {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
