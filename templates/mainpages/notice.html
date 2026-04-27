@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include '/common/header.html' %}
+<body>
+    <div class="container mt-2">
+        <!-- 상단 로그인 및 헤더 -->
+        <div class="d-flex justify-content-end mb-3 top-bar">
+            <a href="#" class="text-dark text-decoration-none d-flex align-items-center"><i class="bi bi-person-circle fs-5 me-1"></i> 로그인</a>
+        </div>
+        {% include '/common/topmenu.html' %}
+
+        <!-- 이미지 대신 블로그 iframe 삽입 -->
+        <div class="my-4">
+            <!-- 반응형을 원하시면 class="ratio ratio-16x9" 등을 사용할 수 있지만,
+                 블로그 전체를 보기 편하게 고정 높이를 주는 방식을 추천합니다. -->
+            <iframe
+                src="https://kmstv0013.blogspot.com/"
+                style="width: 100%; height: 800px; border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+                title="KMS Blog">
+            </iframe>
+        </div>
+    </div>
+    {% include '/common/footer.html' %}
+    <!-- 모달 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
