@@ -25,6 +25,17 @@ async def read_root(request: Request):
         },
     )
 
+
+@app.get("/home", response_class=HTMLResponse)
+async def read_home(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "title": "IYCF - 국제청소년문화재단",
+        },
+    )
+
 @app.get("/introduction", response_class=HTMLResponse)
 async def introduction(request: Request):
     return templates.TemplateResponse(
