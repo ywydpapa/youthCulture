@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+.idea/
+.vscode/
+
+# 업로드된 파일 (단, uploads 디렉토리는 유지)
+static/uploads/*
+!static/uploads/.gitkeep

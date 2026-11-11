@@ -3,34 +3,142 @@
 {% include '/common/header.html' %}
 <body>
     <div class="container mt-2">
-        <!-- 상단 로그인 및 헤더 -->
-        <div class="d-flex justify-content-end mb-3 top-bar">
-            <a href="#" class="text-dark text-decoration-none d-flex align-items-center"><i class="bi bi-person-circle fs-5 me-1"></i> 로그인</a>
-        </div>
+        {% include '/common/top_bar.html' %}
         {% include '/common/topmenu.html' %}
 
-        <div>
-            <img src="/static/images/notice01.png" alt="notice" class="img-fluid d-block mx-auto">
+        <div class="section-title-wrapper">
+            <div class="section-title-line"></div>
+            <div class="section-title-text">NOTICE BOARD</div>
+            <div class="section-title-line"></div>
         </div>
-        <div>
-            <img src="/static/images/notice02.png" alt="notice" class="img-fluid d-block mx-auto">
+
+        <!-- 게시판 헤더 및 검색 툴바 -->
+        <div class="row align-items-center justify-content-between mb-4 gy-2">
+            <div class="col-md-5">
+                <span class="text-muted small">총 <strong>{{ total_count }}</strong>건의 게시물이 있습니다. (페이지 {{ current_page }}/{{ total_pages }})</span>
+            </div>
+            <div class="col-md-7">
+                <form method="GET" action="/notices" class="d-flex justify-content-md-end gap-2">
+                    <select name="category" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+                        <option value="" {% if not category %}selected{% endif %}>전체 분류</option>
+                        <option value="공지사항" {% if category == '공지사항' %}selected{% endif %}>공지사항</option>
+                        <option value="행사소식" {% if category == '행사소식' %}selected{% endif %}>행사소식</option>
+                        <option value="교육안내" {% if category == '교육안내' %}selected{% endif %}>교육안내</option>
+                        <option value="보도자료" {% if category == '보도자료' %}selected{% endif %}>보도자료</option>
+                    </select>
+                    <div class="input-group input-group-sm" style="max-width: 250px;">
+                        <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="검색어 입력">
+                        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                    {% if admin %}
+                    <a href="/admin/posts/new" class="btn btn-primary btn-sm text-nowrap" style="background-color: #2b6a9c; border-color: #2b6a9c;">
+                        <i class="bi bi-pencil-fill me-1"></i>글쓰기
+                    </a>
+                    {% endif %}
+                </form>
+            </div>
         </div>
-        <div>
-            <img src="/static/images/notice03.png" alt="notice" class="img-fluid d-block mx-auto">
+
+        <!-- 게시글 목록 테이블 -->
+        <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-center">
+                    <thead style="background-color: #f7f9fa;" class="small text-secondary border-bottom">
+                        <tr>
+                            <th style="width: 70px;">번호</th>
+                            <th style="width: 100px;">분류</th>
+                            <th class="text-start">제목</th>
+                            <th style="width: 60px;">첨부</th>
+                            <th style="width: 100px;">작성자</th>
+                            <th style="width: 110px;">작성일</th>
+                            <th style="width: 70px;">조회</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if posts %}
+                            {% for post in posts %}
+                            <tr>
+                                <td class="text-muted small">{{ post.id }}</td>
+                                <td>
+                                    <span class="badge rounded-pill bg-light text-dark border small">{{ post.category }}</span>
+                                </td>
+                                <td class="text-start">
+                                    <a href="/notices/{{ post.id }}" class="text-decoration-none text-dark fw-semibold d-inline-block py-1">
+                                        {{ post.title }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if post.attachments|length > 0 %}
+                                        <i class="bi bi-paperclip text-primary fs-6" title="첨부파일 {{ post.attachments|length }}개"></i>
+                                    {% else %}
+                                        <span class="text-muted small">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-muted small">{{ post.author }}</td>
+                                <td class="text-muted small">{{ post.created_at.strftime('%Y-%m-%d') }}</td>
+                                <td class="text-muted small">{{ post.hit_count }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="py-5 text-muted">
+                                    <i class="bi bi-chat-square-dots fs-1 d-block mb-2 text-secondary opacity-50"></i>
+                                    등록된 게시글이 없습니다.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <!-- 이미지 대신 블로그 iframe 삽입 -->
-        <div class="my-4">
-            <!-- 반응형을 원하시면 class="ratio ratio-16x9" 등을 사용할 수 있지만,
-                 블로그 전체를 보기 편하게 고정 높이를 주는 방식을 추천합니다. -->
-            <iframe
-                src="https://kmstv0013.blogspot.com/"
-                style="width: 100%; height: 800px; border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
-                title="KMS Blog">
-            </iframe>
+
+        <!-- 페이지네이션 -->
+        {% if total_pages > 1 %}
+        <nav aria-label="Page navigation" class="mb-5">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
+                    <a class="page-link" href="?page={{ current_page - 1 }}&q={{ q }}&category={{ category }}">이전</a>
+                </li>
+                {% for p in range(1, total_pages + 1) %}
+                <li class="page-item {% if p == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ p }}&q={{ q }}&category={{ category }}">{{ p }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
+                    <a class="page-link" href="?page={{ current_page + 1 }}&q={{ q }}&category={{ category }}">다음</a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+
+        <!-- 하단 블로그 및 기존 안내 섹션 (아코디언 토글) -->
+        <div class="accordion mb-5" id="noticeExtraAccordion">
+            <div class="accordion-item border shadow-sm">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-semibold text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlog" aria-expanded="false" aria-controls="collapseBlog">
+                        <i class="bi bi-journal-text me-2 text-primary"></i>재단 공식 블로그 및 지난 안내문 보기
+                    </button>
+                </h2>
+                <div id="collapseBlog" class="accordion-collapse collapse" data-bs-parent="#noticeExtraAccordion">
+                    <div class="accordion-body p-3">
+                        <div class="mb-3">
+                            <img src="/static/images/notice01.png" alt="notice" class="img-fluid d-block mx-auto mb-2">
+                            <img src="/static/images/notice02.png" alt="notice" class="img-fluid d-block mx-auto mb-2">
+                            <img src="/static/images/notice03.png" alt="notice" class="img-fluid d-block mx-auto mb-2">
+                        </div>
+                        <iframe
+                            src="https://kmstv0013.blogspot.com/"
+                            style="width: 100%; height: 600px; border: none; border-radius: 8px;"
+                            title="KMS Blog">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
+
     {% include '/common/footer.html' %}
-    <!-- 모달 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

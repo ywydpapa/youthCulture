@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-end mb-3 top-bar align-items-center gap-2">
+    {% if admin %}
+        <span class="badge bg-primary text-white px-2 py-1"><i class="bi bi-shield-lock-fill me-1"></i>관리자 ({{ admin.username }})</span>
+        <a href="/admin/posts" class="btn btn-sm btn-outline-dark py-0 px-2" style="font-size: 0.85rem;"><i class="bi bi-gear me-1"></i>게시판 관리</a>
+        <a href="/admin/logout" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 0.85rem;"><i class="bi bi-box-arrow-right me-1"></i>로그아웃</a>
+    {% else %}
+        <a href="/admin/login" class="text-dark text-decoration-none d-flex align-items-center"><i class="bi bi-person-circle fs-5 me-1"></i> 로그인</a>
+    {% endif %}
+</div>

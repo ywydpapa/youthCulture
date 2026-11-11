@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include '/common/header.html' %}
+<body>
+    <div class="container mt-2">
+        {% include '/common/top_bar.html' %}
+        {% include '/common/topmenu.html' %}
+
+        <div class="section-title-wrapper">
+            <div class="section-title-line"></div>
+            <div class="section-title-text">CODE EDITOR</div>
+            <div class="section-title-line"></div>
+        </div>
+
+        <!-- 관리자 탭 메뉴 -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link text-muted" href="/admin/posts"><i class="bi bi-kanban me-1"></i>게시글 관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active fw-bold text-primary" href="/admin/pages"><i class="bi bi-file-earmark-code me-1"></i>HTML 페이지 관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-muted" href="/admin/media"><i class="bi bi-images me-1"></i>이미지 관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-muted" href="/admin/change-password"><i class="bi bi-key me-1"></i>비밀번호 변경</a>
+            </li>
+        </ul>
+
+        <div class="card border-0 shadow-sm rounded-3 mb-5">
+            <div class="card-header bg-white border-bottom py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div>
+                    <h5 class="fw-bold mb-0 text-dark">
+                        <i class="bi bi-code-slash text-primary me-2"></i>HTML 코드 직접 편집: <strong>{{ page.title }}</strong>
+                    </h5>
+                    <span class="badge bg-secondary-subtle text-secondary border small mt-1">
+                        URL: {% if page.slug == 'jangsan' %}/jangsan{% else %}/p/{{ page.slug }}{% endif %}
+                    </span>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="/admin/media" target="_blank" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-images me-1"></i>이미지 보관함 열기
+                    </a>
+                    <a href="{% if page.slug == 'jangsan' %}/jangsan{% else %}/p/{{ page.slug }}{% endif %}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-box-arrow-up-right me-1"></i>페이지 새창 미리보기
+                    </a>
+                    <a href="/admin/pages" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i>목록으로
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                {% if success %}
+                <div class="alert alert-success py-2 px-3 small d-flex align-items-center mb-3" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <div>{{ success }}</div>
+                </div>
+                {% endif %}
+
+                {% if error %}
+                <div class="alert alert-danger py-2 px-3 small d-flex align-items-center mb-3" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div>{{ error }}</div>
+                </div>
+                {% endif %}
+
+                <div class="alert alert-light border small text-muted mb-3 py-2">
+                    <i class="bi bi-info-circle text-primary me-1"></i>
+                    <strong>팁:</strong> 본문에 이미지를 넣으려면 상단의 <strong>[이미지 보관함 열기]</strong>에서 이미지를 업로드한 후, <strong>[HTML 태그 복사]</strong> 버튼을 눌러 아래 에디터 원하는 위치에 붙여넣으세요.
+                </div>
+
+                <form method="POST" action="/admin/pages/{{ page.id }}/code">
+                    <div class="mb-3">
+                        <textarea class="form-control font-monospace" id="html_code" name="html_code" rows="22" style="font-size: 0.9rem; line-height: 1.5; background-color: #212529; color: #f8f9fa; border-radius: 8px;">{{ html_code }}</textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="/admin/pages" class="btn btn-secondary px-4">취소</a>
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold" style="background-color: #2b6a9c; border-color: #2b6a9c;">
+                            <i class="bi bi-save me-1"></i>코드 저장 및 반영
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% include '/common/footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
