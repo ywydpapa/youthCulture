@@ -57,13 +57,15 @@ def render_page(template_name: str, request: Request, admin: Optional[models.Adm
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request, db: Session = Depends(get_db)):
     admin = get_current_admin(request, db)
-    return render_page("index.html", request, admin)
+    latest_posts = db.query(models.Post).order_by(models.Post.id.desc()).limit(4).all()
+    return render_page("index.html", request, admin, latest_posts=latest_posts)
 
 
 @app.get("/home", response_class=HTMLResponse)
 async def read_home(request: Request, db: Session = Depends(get_db)):
     admin = get_current_admin(request, db)
-    return render_page("index.html", request, admin)
+    latest_posts = db.query(models.Post).order_by(models.Post.id.desc()).limit(4).all()
+    return render_page("index.html", request, admin, latest_posts=latest_posts)
 
 
 @app.get("/introduction", response_class=HTMLResponse)
